@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/bnbMenuBreeds"
+        android:title="@string/breeds"
+        android:icon="@drawable/ic_sitting_cat"/>
+
+    <item android:id="@+id/bnbMenuGallery"
+        android:title="@string/gallery" />
+
+    <item android:id="@+id/bnbMenuLiked"
+        android:title="@string/liked"
+        android:icon="@drawable/ic_baseline_favorite"/>
+
+</menu>
