@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Cat app</string>
+    <string name="liked">Liked</string>
+    <string name="gallery">Gallery</string>
+    <string name="breeds">Breeds</string>
 </resources>
