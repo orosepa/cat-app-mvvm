@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:id="@+id/bnbMenuBreeds"
+    <item android:id="@+id/breedsFragment"
         android:title="@string/breeds"
         android:icon="@drawable/ic_sitting_cat"/>
 
-    <item android:id="@+id/bnbMenuGallery"
+    <item android:id="@+id/galleryFragment"
         android:title="@string/gallery" />
 
-    <item android:id="@+id/bnbMenuLiked"
+    <item android:id="@+id/likedFragment"
         android:title="@string/liked"
         android:icon="@drawable/ic_baseline_favorite"/>
 
