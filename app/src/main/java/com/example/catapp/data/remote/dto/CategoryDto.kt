@@ -1,6 +1,6 @@
 package com.example.catapp.data.remote.dto
 
-data class Category(
+data class CategoryDto(
     val id: Int,
     val name: String
 )
