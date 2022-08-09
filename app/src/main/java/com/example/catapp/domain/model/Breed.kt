@@ -12,6 +12,6 @@ data class Breed(
     val life_span: String,
     val name: String,
     val origin: String,
-    val weight: Weight,
+    val weight: String,
     val wikipedia_url: String
 )
