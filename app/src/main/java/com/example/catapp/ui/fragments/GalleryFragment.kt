@@ -1,9 +1,11 @@
 package com.example.catapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -11,7 +13,10 @@ import com.example.catapp.R
 import com.example.catapp.adapter.GalleryAdapter
 import com.example.catapp.databinding.FragmentGalleryBinding
 import com.example.catapp.ui.viewmodels.GalleryViewModel
+import com.example.catapp.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
+import retrofit2.Response
+import java.util.*
 
 @AndroidEntryPoint
 class GalleryFragment : Fragment(R.layout.fragment_gallery) {
@@ -33,10 +38,32 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
-        viewModel.catPhotos.observe(viewLifecycleOwner) { response ->
-            galleryAdapter.differ.submitList(response)
+        viewModel.catImages.observe(viewLifecycleOwner) { response ->
+            when (response) {
+                is Resource.Success -> {
+                    hideProgressBar()
+                    response.data?.let {
+                        galleryAdapter.differ.submitList(response.data)
+                    }
+                }
+                is Resource.Error -> {
+                    hideProgressBar()
+                    response.data?.let { message ->
+                        Log.e("GalleryFragment", "An Error Occured: $message")
+                    }
+                }
+                is Resource.Loading -> showProgressBar()
+            }
         }
     }
+
+    private fun showProgressBar() {
+        binding.pbGallery.visibility = View.VISIBLE
+    }
+    private fun hideProgressBar() {
+        binding.pbGallery.visibility = View.INVISIBLE
+    }
+
     private fun setupRecyclerView() {
         galleryAdapter = GalleryAdapter()
         binding.rvGallery.apply {
