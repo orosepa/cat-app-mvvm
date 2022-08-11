@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/primaryLightColor"
     tools:context=".ui.CatAppActivity">
 
     <FrameLayout
@@ -46,7 +47,9 @@
             android:layout_marginBottom="8dp"
             android:clickable="false"
             android:src="@drawable/ic_grinning_cat"
-            tools:ignore="SpeakableTextPresentCheck" />
+            tools:ignore="SpeakableTextPresentCheck"
+            android:background="@android:color/transparent"
+            tools:background="@android:color/transparent" />
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
 
