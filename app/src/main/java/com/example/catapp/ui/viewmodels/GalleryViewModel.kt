@@ -3,7 +3,7 @@ package com.example.catapp.ui.viewmodels
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.catapp.data.remote.dto.CatImageDto
+import com.example.catapp.data.remote.dto.FilteredCatImageDto
 import com.example.catapp.data.remote.toCatImage
 import com.example.catapp.domain.model.CatImage
 import com.example.catapp.domain.repository.CatappRepository
@@ -19,22 +19,24 @@ class GalleryViewModel @Inject constructor(
 ) : ViewModel() {
 
     val catImages: MutableLiveData<Resource<MutableList<CatImage>>> = MutableLiveData()
-    var catImagesResponse: MutableList<CatImageDto>? = null
+    var catImagesResponse: MutableList<FilteredCatImageDto>? = null
+    var catImagesPage = 1
 
     init {
-        getTenCats()
+        getCatImages()
     }
 
-    private fun getTenCats() = viewModelScope.launch {
+   fun getCatImages() = viewModelScope.launch {
         catImages.postValue(Resource.Loading())
-        val response = catRepository.getTenCats()
+        val response = catRepository.getCatImages()
         catImages.postValue(handleCatImagesResponse(response))
     }
 
     private fun handleCatImagesResponse(
-        response: Response<MutableList<CatImageDto>>
+        response: Response<MutableList<FilteredCatImageDto>>
     ) : Resource<MutableList<CatImage>> {
         if (response.isSuccessful) {
+            catImagesPage++
             response.body()?.let { resultResponse ->
                 if (catImagesResponse == null) {
                     catImagesResponse = resultResponse

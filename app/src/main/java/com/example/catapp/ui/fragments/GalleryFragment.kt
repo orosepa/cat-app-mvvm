@@ -5,18 +5,19 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
+import android.widget.AbsListView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.catapp.R
 import com.example.catapp.adapter.GalleryAdapter
 import com.example.catapp.databinding.FragmentGalleryBinding
 import com.example.catapp.ui.viewmodels.GalleryViewModel
+import com.example.catapp.util.Constants
 import com.example.catapp.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
-import retrofit2.Response
-import java.util.*
+
 
 @AndroidEntryPoint
 class GalleryFragment : Fragment(R.layout.fragment_gallery) {
@@ -24,6 +25,9 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     private lateinit var binding: FragmentGalleryBinding
     lateinit var galleryAdapter: GalleryAdapter
     private val viewModel: GalleryViewModel by viewModels()
+
+    var isLoading = false
+    var isScrolling = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,11 +61,44 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         }
     }
 
+    val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
+                isScrolling = true
+            }
+        }
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+
+            val layoutManager = recyclerView.layoutManager as GridLayoutManager
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            val visibleItemCount = layoutManager.childCount
+            val totalItemCount = layoutManager.itemCount
+
+            val isNotAtBeginning = firstVisibleItemPosition >= 0
+            val isAtLastItem = firstVisibleItemPosition + visibleItemCount / 2 >= totalItemCount / 2
+            val isTotalMoreThanVisible = totalItemCount >= Constants.QUERY_PAGE_SIZE
+
+            val shouldPaginate = isNotAtBeginning && isAtLastItem && isTotalMoreThanVisible
+
+            if (shouldPaginate) {
+                viewModel.getCatImages()
+                isScrolling = false
+            } else {
+                binding.rvGallery.setPadding(0, 0, 0, 0)
+            }
+        }
+    }
+
     private fun showProgressBar() {
         binding.pbGallery.visibility = View.VISIBLE
+        isLoading = true
     }
     private fun hideProgressBar() {
         binding.pbGallery.visibility = View.INVISIBLE
+        isLoading = false
     }
 
     private fun setupRecyclerView() {
@@ -69,6 +106,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         binding.rvGallery.apply {
             adapter = galleryAdapter
             layoutManager = GridLayoutManager(activity, 2)
+            addOnScrollListener(scrollListener)
         }
     }
 }

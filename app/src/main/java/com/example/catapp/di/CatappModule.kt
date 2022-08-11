@@ -3,6 +3,7 @@ package com.example.catapp.di
 import com.example.catapp.data.remote.CatApi
 import com.example.catapp.data.repository.CatappRepositoryImpl
 import com.example.catapp.domain.repository.CatappRepository
+import com.example.catapp.util.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +20,7 @@ object CatappModule {
     @Provides
     fun provideCatApi(): CatApi {
         return Retrofit.Builder()
-            .baseUrl("https://api.thecatapi.com")
+            .baseUrl(Constants.BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(CatApi::class.java)
