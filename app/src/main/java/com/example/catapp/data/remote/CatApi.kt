@@ -1,5 +1,6 @@
 package com.example.catapp.data.remote
 
+import com.example.catapp.data.remote.dto.CategoryDto
 import com.example.catapp.data.remote.dto.FilteredCatImageDto
 import com.example.catapp.util.Constants
 import retrofit2.Response
@@ -14,4 +15,7 @@ interface CatApi {
         @Query("page") page: Int = 1,
         @Query("api_key") apiKey: String = Constants.CATS_API
     ): Response<MutableList<FilteredCatImageDto>>
+
+    @GET("/v1/categories")
+    suspend fun getCategories(): Response<MutableList<CategoryDto>>
 }

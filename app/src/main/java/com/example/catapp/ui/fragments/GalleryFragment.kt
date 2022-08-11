@@ -1,5 +1,6 @@
 package com.example.catapp.ui.fragments
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.example.catapp.databinding.FragmentGalleryBinding
 import com.example.catapp.ui.viewmodels.GalleryViewModel
 import com.example.catapp.util.Constants
 import com.example.catapp.util.Resource
+import com.google.android.material.chip.Chip
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -41,7 +43,10 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        loadImages()
+    }
 
+    private fun loadImages() {
         viewModel.catImages.observe(viewLifecycleOwner) { response ->
             when (response) {
                 is Resource.Success -> {
@@ -49,6 +54,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
                     response.data?.let {
                         galleryAdapter.differ.submitList(response.data)
                     }
+                    createChipGroup()
                 }
                 is Resource.Error -> {
                     hideProgressBar()
@@ -61,7 +67,28 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         }
     }
 
-    val scrollListener = object : RecyclerView.OnScrollListener() {
+    private fun createChipGroup() {
+        viewModel.categories.observe(viewLifecycleOwner) { response ->
+            when(response) {
+                is Resource.Success -> {
+                    response.data?.forEach { category ->
+                        val chip = Chip(context, null, com.google.android.material.R.style.Widget_MaterialComponents_Chip_Choice)
+                        chip.text = category.name
+                        chip.textSize = 18f
+                        chip.height = 36
+                        binding.cgCategories.addView(chip)
+                    }
+                }
+                is Resource.Error -> {
+                    response.data?.let { message ->
+                        Log.e("GalleryFragment", "An error occured: $message")
+                    }
+                }
+            }
+        }
+    }
+
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
         override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
             super.onScrollStateChanged(recyclerView, newState)
             if (newState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) {
@@ -78,10 +105,10 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             val totalItemCount = layoutManager.itemCount
 
             val isNotAtBeginning = firstVisibleItemPosition >= 0
-            val isAtLastItem = firstVisibleItemPosition + visibleItemCount / 2 >= totalItemCount / 2
+            val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
             val isTotalMoreThanVisible = totalItemCount >= Constants.QUERY_PAGE_SIZE
 
-            val shouldPaginate = isNotAtBeginning && isAtLastItem && isTotalMoreThanVisible
+            val shouldPaginate = !isLoading && isNotAtBeginning && isAtLastItem && isTotalMoreThanVisible
 
             if (shouldPaginate) {
                 viewModel.getCatImages()
