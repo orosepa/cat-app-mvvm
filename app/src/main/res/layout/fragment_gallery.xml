@@ -7,7 +7,7 @@
     <HorizontalScrollView
         android:id="@+id/hsvGallery"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="@dimen/large_175"
         android:layout_marginTop="?attr/actionBarSize"
         android:background="@color/primaryLightColor"
         android:backgroundTintMode="add"
@@ -20,10 +20,11 @@
             android:id="@+id/cgCategories"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            app:chipSpacing="16dp"
+            android:layout_marginHorizontal="@dimen/normal_100"
+            android:layout_marginTop="@dimen/small_100"
+            android:paddingEnd="@dimen/normal_200"
             app:singleLine="true"
-            app:singleSelection="true"
-            android:layout_margin="8dp"/>
+            app:singleSelection="true"/>
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -31,8 +32,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:paddingBottom="16dp"
-        android:layout_marginHorizontal="8dp"
+        android:paddingBottom="@dimen/normal_100"
+        android:layout_marginHorizontal="@dimen/small_100"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
