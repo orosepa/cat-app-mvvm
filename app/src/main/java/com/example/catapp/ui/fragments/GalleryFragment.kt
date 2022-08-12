@@ -1,12 +1,12 @@
 package com.example.catapp.ui.fragments
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,6 +23,8 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class GalleryFragment : Fragment(R.layout.fragment_gallery) {
+
+    val TAG = "GalleryFragment"
 
     private lateinit var binding: FragmentGalleryBinding
     lateinit var galleryAdapter: GalleryAdapter
@@ -44,6 +46,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         loadImages()
+        createChipGroup()
     }
 
     private fun loadImages() {
@@ -54,12 +57,11 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
                     response.data?.let {
                         galleryAdapter.differ.submitList(response.data)
                     }
-                    createChipGroup()
                 }
                 is Resource.Error -> {
                     hideProgressBar()
                     response.data?.let { message ->
-                        Log.e("GalleryFragment", "An Error Occured: $message")
+                        Log.e(TAG, "An Error Occured: $message")
                     }
                 }
                 is Resource.Loading -> showProgressBar()
@@ -75,15 +77,31 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
                         val chip = Chip(context, null, com.google.android.material.R.style.Widget_MaterialComponents_Chip_Choice)
                         chip.text = category.name
                         chip.textSize = 18f
-                        chip.height = 36
+                        chip.isCheckable = true
+                        chip.isCheckedIconVisible = false
+                        chip.setOnClickListener {
+                            chip.isChecked = true
+                            chip.isCloseIconVisible = true
+                        }
+                        chip.setOnCloseIconClickListener {
+                            chip.isChecked = false
+                            chip.isCloseIconVisible = false
+                        }
+                        chip.setOnCheckedChangeListener {selectedChip, isChecked ->
+                            chip.isCloseIconVisible = isChecked
+                            if (selectedChip.isChecked == isChecked) {
+                                Toast.makeText(context, chip.text, Toast.LENGTH_SHORT).show()
+                            }
+                        }
                         binding.cgCategories.addView(chip)
                     }
                 }
                 is Resource.Error -> {
                     response.data?.let { message ->
-                        Log.e("GalleryFragment", "An error occured: $message")
+                        Log.e(TAG, "An error occurred: $message")
                     }
                 }
+                is Resource.Loading -> Log.i(TAG, "Loading categories...")
             }
         }
     }
