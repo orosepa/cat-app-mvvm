@@ -23,6 +23,7 @@
             android:layout_marginHorizontal="@dimen/normal_100"
             android:layout_marginTop="@dimen/small_100"
             android:paddingEnd="@dimen/normal_200"
+            android:visibility="invisible"
             app:singleLine="true"
             app:singleSelection="true"/>
     </HorizontalScrollView>

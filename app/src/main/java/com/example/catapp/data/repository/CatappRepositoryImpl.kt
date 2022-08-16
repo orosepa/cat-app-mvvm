@@ -8,7 +8,6 @@ class CatappRepositoryImpl @Inject constructor (
     private val api: CatApi
 ) : CatappRepository {
 
-    override suspend fun getCatImages() = api.getCatImages()
+    override suspend fun getCatImages(categoryId: Int?) = api.getCatImages(categoryId = categoryId)
     override suspend fun getCategories() = api.getCategories()
-
 }

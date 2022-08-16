@@ -13,6 +13,7 @@ interface CatApi {
     suspend fun getCatImages(
         @Query("limit") limit: Int = Constants.QUERY_PAGE_SIZE,
         @Query("page") page: Int = 1,
+        @Query("category_ids") categoryId: Int?,
         @Query("api_key") apiKey: String = Constants.CATS_API
     ): Response<MutableList<FilteredCatImageDto>>
 

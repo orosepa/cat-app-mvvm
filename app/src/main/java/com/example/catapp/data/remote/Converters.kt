@@ -24,5 +24,6 @@ fun BreedDto.toBreed() = Breed(
 )
 
 fun CategoryDto.toCategory() = Category(id, name)
+fun Category.toCategoryDto() = CategoryDto(id, name)
 
 fun FilteredCatImageDto.toCatImage() = CatImage(id, url)

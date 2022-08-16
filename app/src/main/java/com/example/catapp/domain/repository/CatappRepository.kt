@@ -6,7 +6,7 @@ import retrofit2.Response
 
 interface CatappRepository {
 
-    suspend fun getCatImages(): Response<MutableList<FilteredCatImageDto>>
+    suspend fun getCatImages(categoryId: Int?): Response<MutableList<FilteredCatImageDto>>
 
     suspend fun getCategories(): Response<MutableList<CategoryDto>>
 }

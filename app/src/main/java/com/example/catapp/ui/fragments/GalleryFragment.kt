@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
@@ -32,6 +31,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
     var isLoading = false
     var isScrolling = false
+    var checkedCategoryId: Int? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +56,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
                     hideProgressBar()
                     response.data?.let {
                         galleryAdapter.differ.submitList(response.data)
+                        binding.cgCategories.visibility = View.VISIBLE
                     }
                 }
                 is Resource.Error -> {
@@ -80,18 +81,26 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
                         chip.isCheckable = true
                         chip.isCheckedIconVisible = false
                         chip.setOnClickListener {
-                            chip.isChecked = true
-                            chip.isCloseIconVisible = true
+                            if (!chip.isChecked) {
+                                chip.isChecked = true
+                            }
                         }
                         chip.setOnCloseIconClickListener {
                             chip.isChecked = false
-                            chip.isCloseIconVisible = false
+                            viewModel.categoryId.postValue(null)
+                            viewModel.getCatImages(null)
+
                         }
                         chip.setOnCheckedChangeListener {selectedChip, isChecked ->
                             chip.isCloseIconVisible = isChecked
-                            if (selectedChip.isChecked == isChecked) {
-                                Toast.makeText(context, chip.text, Toast.LENGTH_SHORT).show()
+                            viewModel.catImages.postValue(Resource.Loading())
+                            viewModel.oldImages?.clear()
+                            if (selectedChip.isChecked) {
+                                checkedCategoryId = viewModel.categories.value?.data?.find { it.name == selectedChip.text}?.id
+                                viewModel.categoryId.postValue(checkedCategoryId)
+                                viewModel.getCatImages(checkedCategoryId)
                             }
+                            Log.i(TAG, "Gallery adapter item count ${galleryAdapter.itemCount}")
                         }
                         binding.cgCategories.addView(chip)
                     }
@@ -129,7 +138,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
             val shouldPaginate = !isLoading && isNotAtBeginning && isAtLastItem && isTotalMoreThanVisible
 
             if (shouldPaginate) {
-                viewModel.getCatImages()
+                viewModel.getCatImages(checkedCategoryId)
                 isScrolling = false
             } else {
                 binding.rvGallery.setPadding(0, 0, 0, 0)
