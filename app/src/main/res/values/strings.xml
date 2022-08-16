@@ -3,4 +3,6 @@
     <string name="liked">Liked</string>
     <string name="gallery">Gallery</string>
     <string name="breeds">Breeds</string>
+    <string name="add_to_favorite">Add to favorite</string>
+    <string name="image">Image</string>
 </resources>

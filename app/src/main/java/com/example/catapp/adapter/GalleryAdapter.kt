@@ -40,11 +40,18 @@ class GalleryAdapter: RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
         val catImage = differ.currentList[position]
         holder.itemView.apply {
             Glide.with(this).load(catImage.url).into(findViewById(R.id.ivCatImage))
+            setOnClickListener { onItemClickListener?.let { it(catImage) } }
         }
     }
 
     override fun getItemCount(): Int {
         return differ.currentList.size
+    }
+
+    private var onItemClickListener: ((CatImage) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (CatImage) -> Unit) {
+        onItemClickListener = listener
     }
 
 }

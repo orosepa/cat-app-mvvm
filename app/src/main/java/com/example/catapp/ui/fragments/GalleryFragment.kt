@@ -3,11 +3,15 @@ package com.example.catapp.ui.fragments
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.catapp.R
@@ -42,9 +46,21 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
         return binding.root
     }
 
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+
+        galleryAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("CatImage", it)
+            }
+            findNavController().navigate(
+                R.id.action_galleryFragment_to_imageFragment,
+                bundle
+            )
+        }
+
         loadImages()
         createChipGroup()
     }
