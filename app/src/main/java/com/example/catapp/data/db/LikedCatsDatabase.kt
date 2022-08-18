@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.catapp.domain.model.CatImage
 
-@Database(entities = [CatImage::class], version = 1)
+@Database(entities = [CatImageEntity::class], version = 1)
 abstract class LikedCatsDatabase: RoomDatabase() {
     abstract val dao: LikedCatsDao
 

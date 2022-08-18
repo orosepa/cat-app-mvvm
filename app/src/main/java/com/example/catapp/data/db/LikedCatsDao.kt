@@ -13,8 +13,8 @@ interface LikedCatsDao {
     fun getStations(): LiveData<List<CatImageEntity>>
 
     @Insert
-    suspend fun insertImage(): Boolean
+    suspend fun insertImage(catImageEntity: CatImageEntity)
 
     @Delete
-    suspend fun deleteImage(): Boolean
+    suspend fun deleteImage(catImageEntity: CatImageEntity)
 }
