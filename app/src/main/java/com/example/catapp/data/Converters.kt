@@ -1,14 +1,13 @@
-package com.example.catapp.data.remote
+package com.example.catapp.data
 
+import com.example.catapp.data.db.CatImageEntity
 import com.example.catapp.data.remote.dto.BreedDto
-import com.example.catapp.data.remote.dto.CatImageDto
 import com.example.catapp.data.remote.dto.CategoryDto
 import com.example.catapp.data.remote.dto.FilteredCatImageDto
 import com.example.catapp.domain.model.Breed
 import com.example.catapp.domain.model.CatImage
 import com.example.catapp.domain.model.Category
 
-fun CatImageDto.toCatImage() = CatImage(id, url)
 
 fun BreedDto.toBreed() = Breed(
     id = id,
@@ -24,6 +23,8 @@ fun BreedDto.toBreed() = Breed(
 )
 
 fun CategoryDto.toCategory() = Category(id, name)
-fun Category.toCategoryDto() = CategoryDto(id, name)
 
 fun FilteredCatImageDto.toCatImage() = CatImage(id, url)
+
+fun CatImage.toCatImageEntity() = CatImageEntity(id, url)
+fun CatImageEntity.toCatImage() = CatImage(id, url)

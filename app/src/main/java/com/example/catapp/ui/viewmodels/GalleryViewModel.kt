@@ -1,15 +1,12 @@
 package com.example.catapp.ui.viewmodels
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.catapp.data.remote.dto.CatImageDto
 import com.example.catapp.data.remote.dto.CategoryDto
 import com.example.catapp.data.remote.dto.FilteredCatImageDto
-import com.example.catapp.data.remote.toCatImage
-import com.example.catapp.data.remote.toCategory
-import com.example.catapp.data.remote.toCategoryDto
+import com.example.catapp.data.toCatImage
+import com.example.catapp.data.toCategory
 import com.example.catapp.domain.model.CatImage
 import com.example.catapp.domain.model.Category
 import com.example.catapp.domain.repository.CatappRepository

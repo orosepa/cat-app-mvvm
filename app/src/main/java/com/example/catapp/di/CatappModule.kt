@@ -1,5 +1,8 @@
 package com.example.catapp.di
 
+import android.app.Application
+import androidx.room.Room
+import com.example.catapp.data.db.LikedCatsDatabase
 import com.example.catapp.data.remote.CatApi
 import com.example.catapp.data.repository.CatappRepositoryImpl
 import com.example.catapp.domain.repository.CatappRepository
@@ -28,5 +31,16 @@ object CatappModule {
 
     @Singleton
     @Provides
-    fun provideDataRepository(api: CatApi): CatappRepository = CatappRepositoryImpl(api)
+    fun provideLikedCatsDatabase(app: Application): LikedCatsDatabase {
+        return LikedCatsDatabase.getDatabase(app.applicationContext) ?:
+        Room.databaseBuilder(
+            app,
+            LikedCatsDatabase::class.java,
+            "liked_cats.db"
+        ).build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideDataRepository(api: CatApi, db: LikedCatsDatabase): CatappRepository = CatappRepositoryImpl(api, db)
 }
