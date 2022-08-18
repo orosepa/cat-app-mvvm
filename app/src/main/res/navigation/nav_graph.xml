@@ -12,18 +12,18 @@
     <fragment
         android:id="@+id/likedFragment"
         android:name="com.example.catapp.ui.fragments.LikedFragment"
-        android:label="@string/liked" />
+        android:label="@string/liked" >
+        <action
+            android:id="@+id/action_likedFragment_to_imageFragment"
+            app:destination="@id/imageFragment" />
+    </fragment>
     <fragment
         android:id="@+id/galleryFragment"
         android:name="com.example.catapp.ui.fragments.GalleryFragment"
         android:label="@string/gallery" >
         <action
             android:id="@+id/action_galleryFragment_to_imageFragment"
-            app:destination="@id/imageFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            app:destination="@id/imageFragment" />
     </fragment>
     <fragment
         android:id="@+id/imageFragment"
@@ -32,8 +32,5 @@
         <argument
             android:name="CatImage"
             app:argType="com.example.catapp.domain.model.CatImage" />
-        <action
-            android:id="@+id/action_imageFragment_to_galleryFragment"
-            app:destination="@id/galleryFragment" />
     </fragment>
 </navigation>

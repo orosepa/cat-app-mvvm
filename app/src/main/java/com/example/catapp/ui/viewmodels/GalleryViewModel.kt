@@ -87,4 +87,16 @@ class GalleryViewModel @Inject constructor(
         }
         return Resource.Error(response.message())
     }
+
+    fun findLikedCatById(id: String) = catRepository.findLikedCatImageById(id)
+
+    fun getLikedCatImages() = catRepository.getLikedCatImages()
+
+    fun likeCatImage(catImage: CatImage) = viewModelScope.launch {
+        catRepository.insertCatImage(catImage)
+    }
+
+    fun dislikeCatImage(catImage: CatImage) = viewModelScope.launch {
+        catRepository.deleteCatImage(catImage)
+    }
 }

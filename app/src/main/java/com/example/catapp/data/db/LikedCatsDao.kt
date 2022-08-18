@@ -10,7 +10,10 @@ import androidx.room.Query
 interface LikedCatsDao {
 
     @Query("SELECT * FROM catimageentity")
-    fun getStations(): LiveData<List<CatImageEntity>>
+    fun getLikedCatImages(): LiveData<List<CatImageEntity>>
+
+    @Query("SELECT * FROM catimageentity WHERE id=:id")
+    fun findImageById(id: String): LiveData<CatImageEntity>
 
     @Insert
     suspend fun insertImage(catImageEntity: CatImageEntity)

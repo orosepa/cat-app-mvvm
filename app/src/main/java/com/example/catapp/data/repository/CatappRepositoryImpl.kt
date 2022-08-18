@@ -1,7 +1,11 @@
 package com.example.catapp.data.repository
 
+import androidx.lifecycle.LiveData
+import com.example.catapp.data.db.CatImageEntity
 import com.example.catapp.data.db.LikedCatsDatabase
 import com.example.catapp.data.remote.CatApi
+import com.example.catapp.data.toCatImageEntity
+import com.example.catapp.domain.model.CatImage
 import com.example.catapp.domain.repository.CatappRepository
 import javax.inject.Inject
 
@@ -12,7 +16,16 @@ class CatappRepositoryImpl @Inject constructor (
 
     // remote
     override suspend fun getCatImages(categoryId: Int?) = api.getCatImages(categoryId = categoryId)
+
     override suspend fun getCategories() = api.getCategories()
 
     // db
+    override fun getLikedCatImages(): LiveData<List<CatImageEntity>> =
+        db.dao.getLikedCatImages()
+
+    override suspend fun insertCatImage(catImage: CatImage) = db.dao.insertImage(catImage.toCatImageEntity())
+
+    override suspend fun deleteCatImage(catImage: CatImage) = db.dao.deleteImage(catImage.toCatImageEntity())
+
+    override fun findLikedCatImageById(id: String) = db.dao.findImageById(id)
 }

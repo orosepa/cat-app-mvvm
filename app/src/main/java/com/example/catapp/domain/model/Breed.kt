@@ -1,7 +1,6 @@
 package com.example.catapp.domain.model
 
 import com.example.catapp.data.remote.dto.CatImageDto
-import com.example.catapp.data.remote.dto.Weight
 
 data class Breed(
     val alt_names: String,

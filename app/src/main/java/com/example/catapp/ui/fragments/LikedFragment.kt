@@ -5,13 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.catapp.R
-import com.example.catapp.databinding.FragmentGalleryBinding
+import com.example.catapp.adapter.GalleryAdapter
+import com.example.catapp.data.toCatImage
 import com.example.catapp.databinding.FragmentLikedBinding
+import com.example.catapp.ui.viewmodels.GalleryViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LikedFragment : Fragment(R.layout.fragment_liked) {
 
     private lateinit var binding: FragmentLikedBinding
+    lateinit var galleryAdapter: GalleryAdapter
+    private val viewModel: GalleryViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,5 +33,31 @@ class LikedFragment : Fragment(R.layout.fragment_liked) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupRecyclerView()
+
+        galleryAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("CatImage", it)
+            }
+            findNavController().navigate(
+                R.id.action_likedFragment_to_imageFragment,
+                bundle
+            )
+        }
+
+        viewModel.getLikedCatImages().observe(viewLifecycleOwner) { catImages ->
+            if (catImages.isNotEmpty()) {
+                galleryAdapter.differ.submitList(catImages.map { it.toCatImage() })
+            }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        galleryAdapter = GalleryAdapter()
+        binding.rvLiked.apply {
+            adapter = galleryAdapter
+            layoutManager = GridLayoutManager(activity, 2)
+        }
     }
 }
