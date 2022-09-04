@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import com.example.catapp.data.db.CatImageEntity
 import com.example.catapp.data.db.LikedCatsDatabase
 import com.example.catapp.data.remote.CatApi
+import com.example.catapp.data.remote.dto.BreedDto
 import com.example.catapp.data.toCatImageEntity
 import com.example.catapp.domain.model.CatImage
 import com.example.catapp.domain.repository.CatappRepository
+import retrofit2.Response
 import javax.inject.Inject
 
 class CatappRepositoryImpl @Inject constructor (
@@ -19,6 +21,7 @@ class CatappRepositoryImpl @Inject constructor (
 
     override suspend fun getCategories() = api.getCategories()
 
+    override suspend fun getBreeds() = api.getBreeds()
     // db
     override fun getLikedCatImages(): LiveData<List<CatImageEntity>> =
         db.dao.getLikedCatImages()

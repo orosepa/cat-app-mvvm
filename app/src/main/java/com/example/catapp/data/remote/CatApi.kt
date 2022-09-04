@@ -1,5 +1,6 @@
 package com.example.catapp.data.remote
 
+import com.example.catapp.data.remote.dto.BreedDto
 import com.example.catapp.data.remote.dto.CategoryDto
 import com.example.catapp.data.remote.dto.FilteredCatImageDto
 import com.example.catapp.util.Constants
@@ -19,4 +20,7 @@ interface CatApi {
 
     @GET("/v1/categories")
     suspend fun getCategories(): Response<MutableList<CategoryDto>>
+
+    @GET("/v1/breeds")
+    suspend fun getBreeds(): Response<MutableList<BreedDto>>
 }
