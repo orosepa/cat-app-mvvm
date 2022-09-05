@@ -1,11 +1,14 @@
 package com.example.catapp.ui.fragments
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AbsListView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -24,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class GalleryFragment : Fragment(R.layout.fragment_gallery) {
 
-    val TAG = "GalleryFragment"
+    private val TAG = "GalleryFragment"
 
     private lateinit var binding: FragmentGalleryBinding
     lateinit var galleryAdapter: GalleryAdapter
@@ -33,6 +36,7 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
     var isLoading = false
     var isScrolling = false
     var checkedCategoryId: Int? = null
+    var checkedChipName = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,31 +93,40 @@ class GalleryFragment : Fragment(R.layout.fragment_gallery) {
                 is Resource.Success -> {
                     response.data?.forEach { category ->
                         val chip = Chip(context, null, com.google.android.material.R.style.Widget_MaterialComponents_Chip_Choice)
-                        chip.text = category.name
-                        chip.textSize = 18f
-                        chip.isCheckable = true
-                        chip.isCheckedIconVisible = false
-                        chip.setOnClickListener {
-                            if (!chip.isChecked) {
-                                chip.isChecked = true
+                        chip.apply {
+                            text = category.name
+                            textSize = 18f
+                            chipBackgroundColor = ContextCompat.getColorStateList(context, R.color.chip_color)
+                            isCheckable = true
+                            isCheckedIconVisible = false
+                            if (checkedChipName == text.toString()) {
+                                isChecked = true
+                                isCloseIconVisible = true
                             }
-                        }
-                        chip.setOnCloseIconClickListener {
-                            chip.isChecked = false
-                            viewModel.categoryId.postValue(null)
-                            viewModel.getCatImages(null)
-
-                        }
-                        chip.setOnCheckedChangeListener {selectedChip, isChecked ->
-                            chip.isCloseIconVisible = isChecked
-                            viewModel.catImages.postValue(Resource.Loading())
-                            viewModel.oldImages?.clear()
-                            if (selectedChip.isChecked) {
-                                checkedCategoryId = viewModel.categories.value?.data?.find { it.name == selectedChip.text}?.id
-                                viewModel.categoryId.postValue(checkedCategoryId)
-                                viewModel.getCatImages(checkedCategoryId)
+                            setOnClickListener {
+                                if (!isChecked) {
+                                    isChecked = true
+                                }
                             }
-                            Log.i(TAG, "Gallery adapter item count ${galleryAdapter.itemCount}")
+                            setOnCloseIconClickListener {
+                                isChecked = false
+                                viewModel.categoryId.postValue(null)
+                                viewModel.getCatImages(null)
+                            }
+                            setOnCheckedChangeListener {selectedChip, isChecked ->
+                                isCloseIconVisible = isChecked
+                                viewModel.catImages.postValue(Resource.Loading())
+                                viewModel.oldImages?.clear()
+                                if (selectedChip.isChecked) {
+                                    checkedCategoryId = viewModel.categories.value?.data?.find { it.name == selectedChip.text}?.id
+                                    checkedChipName = selectedChip.text.toString()
+                                    viewModel.categoryId.postValue(checkedCategoryId)
+                                    viewModel.getCatImages(checkedCategoryId)
+                                }
+                                if (binding.cgCategories.checkedChipId == -1) {
+                                    checkedChipName = ""
+                                }
+                            }
                         }
                         binding.cgCategories.addView(chip)
                     }

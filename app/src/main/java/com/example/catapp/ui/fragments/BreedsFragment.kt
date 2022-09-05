@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class BreedsFragment : Fragment(R.layout.fragment_breeds) {
 
-    val TAG = "BreedsFragment"
+    private val TAG = "BreedsFragment"
 
     private lateinit var binding: FragmentBreedsBinding
     lateinit var breedsAdapter: BreedsAdapter
