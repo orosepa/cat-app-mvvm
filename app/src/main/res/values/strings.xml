@@ -6,4 +6,12 @@
     <string name="add_to_favorite">Add to favorite</string>
     <string name="image">Image</string>
     <string name="empty_favorites">There\'s nothing to show yet 😔</string>
+    <string name="weight_value">%1$s kg</string>
+    <string name="lifetime_value">%1$s years</string>
+    <string name="Description">Description</string>
+    <string name="Origin">Origin</string>
+    <string name="weight">Weight</string>
+    <string name="lifetime">Lifetime</string>
+    <string name="energy_level">Energy level</string>
+    <string name="on_wikipedia">On wikipedia</string>
 </resources>

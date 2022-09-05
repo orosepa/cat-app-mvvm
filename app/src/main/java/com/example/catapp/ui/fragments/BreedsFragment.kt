@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.catapp.R
 import com.example.catapp.adapter.BreedsAdapter
@@ -37,6 +38,16 @@ class BreedsFragment : Fragment(R.layout.fragment_breeds) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpRecyclerView()
+
+        breedsAdapter.setOnItemClickListener {
+            val bundle = Bundle().apply {
+                putSerializable("Breed", it)
+            }
+            findNavController().navigate(
+                R.id.action_breedsFragment_to_oneBreedFragment,
+                bundle
+            )
+        }
 
         viewModel.breeds.observe(viewLifecycleOwner) {response ->
             when (response) {

@@ -1,6 +1,7 @@
 package com.example.catapp.domain.model
 
 import com.example.catapp.data.remote.dto.CatImageDto
+import java.io.Serializable
 
 data class Breed(
     val alt_names: String?,
@@ -13,4 +14,4 @@ data class Breed(
     val origin: String,
     val weight: String,
     val wikipedia_url: String?
-)
+) : Serializable

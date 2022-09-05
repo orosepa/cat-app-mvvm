@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/normal_100"
+    android:scrollbars="none"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/breedsToolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:title="@string/breeds"/>
+
+        <ImageView
+            app:layout_constraintTop_toBottomOf="@id/breedsToolbar"
+            android:id="@+id/ivOneBreed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="200dp"
+            android:maxHeight="300dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/ic_grinning_cat"/>
+
+        <TextView
+            android:id="@+id/twBreedName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ivOneBreed"
+            tools:text="@string/breeds" />
+
+        <LinearLayout
+            android:id="@+id/llDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/normal_150"
+            app:layout_constraintTop_toBottomOf="@+id/twBreedName" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Description"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/TwBreedDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="@tools:sample/lorem"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llBreedOrigin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/normal_150"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/llDescription">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/Origin"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor" />
+            <TextView
+                android:id="@+id/twBreedOrigin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="Egypt" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llBreedWeight"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/normal_150"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/llBreedOrigin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/weight"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor" />
+            <TextView
+                android:id="@+id/twBreedWeight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="5 kg" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llBreedLifetime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/normal_150"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/llBreedWeight">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/lifetime"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor" />
+            <TextView
+                android:id="@+id/twBreedLifetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="100 years" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llBreedEnergy"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/normal_150"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/llBreedLifetime">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/energy_level"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor" />
+            <RatingBar
+                android:id="@+id/rbBreedEnergy"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:isIndicator="true"
+                style="@style/Widget.AppCompat.RatingBar.Indicator"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llBreedWiki"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/normal_150"
+            android:orientation="vertical"
+            app:layout_constraintTop_toBottomOf="@+id/llBreedEnergy">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/on_wikipedia"
+                android:textStyle="bold"
+                android:textColor="@color/primaryTextColor" />
+            <TextView
+                android:id="@+id/twBreedWiki"
+                android:autoLink="web"
+                android:textColorLink="@color/secondaryDarkColor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="https://" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
