@@ -5,4 +5,5 @@
     <string name="breeds">Breeds</string>
     <string name="add_to_favorite">Add to favorite</string>
     <string name="image">Image</string>
+    <string name="empty_favorites">There\'s nothing to show yet 😔</string>
 </resources>

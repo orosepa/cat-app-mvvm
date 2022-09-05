@@ -48,7 +48,10 @@ class LikedFragment : Fragment(R.layout.fragment_liked) {
 
         viewModel.getLikedCatImages().observe(viewLifecycleOwner) { catImages ->
             if (catImages.isNotEmpty()) {
+                binding.twLiked.visibility = View.GONE
                 galleryAdapter.differ.submitList(catImages.map { it.toCatImage() })
+            } else {
+                binding.twLiked.visibility = View.VISIBLE
             }
         }
     }
