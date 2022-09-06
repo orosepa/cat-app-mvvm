@@ -11,7 +11,11 @@
         android:label="@string/breeds" >
         <action
             android:id="@+id/action_breedsFragment_to_oneBreedFragment"
-            app:destination="@id/oneBreedFragment" />
+            app:destination="@id/oneBreedFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/likedFragment"
@@ -19,7 +23,11 @@
         android:label="@string/liked" >
         <action
             android:id="@+id/action_likedFragment_to_imageFragment"
-            app:destination="@id/imageFragment" />
+            app:destination="@id/imageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/galleryFragment"
@@ -27,7 +35,11 @@
         android:label="@string/gallery" >
         <action
             android:id="@+id/action_galleryFragment_to_imageFragment"
-            app:destination="@id/imageFragment" />
+            app:destination="@id/imageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/imageFragment"
@@ -43,7 +55,11 @@
         android:label="OneBreedFragment" >
         <action
             android:id="@+id/action_oneBreedFragment_to_imageFragment"
-            app:destination="@id/imageFragment" />
+            app:destination="@id/imageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
         <argument
             android:name="Breed"
             app:argType="com.example.catapp.domain.model.Breed" />
