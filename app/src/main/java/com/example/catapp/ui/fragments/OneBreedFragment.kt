@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.catapp.R
@@ -31,27 +32,40 @@ class OneBreedFragment : Fragment(R.layout.fragment_one_breed) {
         val weight = getString(R.string.weight_value, breed.weight)
         val lifetime = getString(R.string.lifetime_value, breed.life_span)
 
+
         if (breed.image != null) {
             Glide.with(this).load(breed.image.url).into(binding.ivOneBreed)
+            binding.ivOneBreed.setOnClickListener {
+                val bundle = Bundle().apply {
+                    putSerializable("CatImage", breed.image)
+                }
+                findNavController().navigate(
+                    R.id.action_oneBreedFragment_to_imageFragment,
+                    bundle
+                )
+            }
         } else {
             binding.ivOneBreed.visibility = View.GONE
         }
-        binding.twBreedName.text = breed.name
-        binding.TwBreedDescription.text = breed.description
-        binding.twBreedOrigin.text = breed.origin
-        binding.twBreedWeight.text = weight
-        binding.twBreedLifetime.text = lifetime
-        if (breed.energy_level == null) {
-            binding.llBreedEnergy.visibility = View.GONE
-        } else {
-            binding.rbBreedEnergy.rating = breed.energy_level.toFloat()
-        }
-        if (breed.wikipedia_url == null) {
-            binding.llBreedWiki.visibility = View.GONE
-        } else {
-            binding.twBreedWiki.text = breed.wikipedia_url
-        }
-//        binding.twBreedWiki.text = breed.wikipedia_url
 
+        binding.apply {
+            twBreedName.text = breed.name
+            twBreedDescription.text = breed.description
+            twBreedOrigin.text = breed.origin
+            twBreedWeight.text = weight
+            twBreedLifetime.text = lifetime
+
+            if (breed.energy_level == null) {
+                llBreedEnergy.visibility = View.GONE
+            } else {
+                rbBreedEnergy.rating = breed.energy_level.toFloat()
+            }
+
+            if (breed.wikipedia_url == null) {
+                llBreedWiki.visibility = View.GONE
+            } else {
+                twBreedWiki.text = breed.wikipedia_url
+            }
+        }
     }
 }

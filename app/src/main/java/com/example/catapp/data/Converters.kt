@@ -2,6 +2,7 @@ package com.example.catapp.data
 
 import com.example.catapp.data.db.CatImageEntity
 import com.example.catapp.data.remote.dto.BreedDto
+import com.example.catapp.data.remote.dto.CatImageDto
 import com.example.catapp.data.remote.dto.CategoryDto
 import com.example.catapp.data.remote.dto.FilteredCatImageDto
 import com.example.catapp.domain.model.Breed
@@ -14,7 +15,7 @@ fun BreedDto.toBreed() = Breed(
     name = name,
     alt_names = alt_names,
     origin = origin,
-    image = image,
+    image = image?.toCatImage(),
     description = description,
     energy_level = energy_level,
     life_span = life_span,
@@ -25,6 +26,6 @@ fun BreedDto.toBreed() = Breed(
 fun CategoryDto.toCategory() = Category(id, name)
 
 fun FilteredCatImageDto.toCatImage() = CatImage(id, url)
-
 fun CatImage.toCatImageEntity() = CatImageEntity(id, url)
 fun CatImageEntity.toCatImage() = CatImage(id, url)
+fun CatImageDto.toCatImage() = CatImage(id, url)

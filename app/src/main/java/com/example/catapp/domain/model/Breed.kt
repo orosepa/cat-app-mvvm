@@ -8,7 +8,7 @@ data class Breed(
     val description: String,
     val energy_level: Int?,
     val id: String,
-    val image: CatImageDto?,
+    val image: CatImage?,
     val life_span: String,
     val name: String,
     val origin: String,
