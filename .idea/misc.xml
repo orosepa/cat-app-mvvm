@@ -11,6 +11,7 @@
         <entry key="app/src/main/res/drawable/ic_grinning_cat.xml" value="0.153" />
         <entry key="app/src/main/res/drawable/ic_grinning_cat_with_smiling_eyes_svgrepo_com.xml" value="0.153" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.153" />
+        <entry key="app/src/main/res/drawable/ic_sitting_cat.xml" value="0.189" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.26" />
         <entry key="app/src/main/res/layout/catapp_widget.xml" value="0.3631418863932292" />
         <entry key="app/src/main/res/layout/fragment_breeds.xml" value="0.14322916666666666" />
@@ -22,6 +23,7 @@
         <entry key="app/src/main/res/layout/item_gallery.xml" value="0.19610507246376813" />
         <entry key="app/src/main/res/menu/bottom_navigation_menu.xml" value="0.14322916666666666" />
         <entry key="app/src/main/res/menu/top_bar_menu.xml" value="0.14322916666666666" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_cat.xml" value="0.1" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_sparkling_heart.xml" value="0.153" />
       </map>
     </option>
